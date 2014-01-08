@@ -6,19 +6,19 @@ var Pomodoro = function() {
 };
 
 Pomodoro.prototype.start = function(duration) {
-    console.log('Starting pomodoro');
-
     if (duration) {
         this.duration = duration;
     }
     this.isStarted = true;
     this.remainingSeconds = this.duration;
     this.startedAt = Date.now();
+    var that = this;
+    time = setTimeout(function(){
+		that.stop();
+    }, this.duration * 1000);
 };
 
 Pomodoro.prototype.stop = function() {
-    console.log('Stopping pomodoro');
-
     this.isStarted = false;
     this.remainingSeconds = null;
     this.startedAt = null;
@@ -30,7 +30,7 @@ Pomodoro.prototype.getRemainingSeconds = function() {
         return null;
     }
     var now = Date.now();
-    var elapsedSeconds = parseInt((now - this.startedAt) / 1000);
+    var elapsedSeconds = parseInt((now - this.startedAt) / 1000, 10);
     return this.duration - elapsedSeconds;
 };
 

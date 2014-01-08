@@ -36,7 +36,13 @@ describe('Pomodoro', function() {
             var pmdr = new Pomodoro();
             pmdr.start();
             expect(pmdr.duration).to.be.equal(1500);
-        })
+        });
+        it('should be stopped when the time is over', function() {
+            var pmdr = new Pomodoro();
+            pmdr.start(1);
+            clock.tick(1000);
+            expect(pmdr.isStarted).to.be.false;
+        });
     });
 
     describe('stop()', function() {
