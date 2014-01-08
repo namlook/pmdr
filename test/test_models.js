@@ -1,5 +1,6 @@
-var should = require('chai').should();
-var expect = require('chai').expect;
+var chai = require('chai');
+chai.Assertion.includeStack = true;
+var expect = chai.expect;
 var sinon = require('sinon');
 
 var Pomodoro = require('../src/js/pmdr');
@@ -52,6 +53,20 @@ describe('Pomodoro', function() {
             expect(pmdr.stop.calledOnce).to.be.false;
 
             clock.tick(600);
+            expect(pmdr.stop.calledOnce).to.be.ok;
+        });
+        it('should clear the timer if stop is called manually', function() {
+            var pmdr = new Pomodoro();
+            sinon.spy(pmdr, "stop");
+            pmdr.start(2);
+
+            clock.tick(1000);
+            expect(pmdr.stop.calledOnce).to.be.false;
+
+            pmdr.stop();
+            expect(pmdr.stop.calledOnce).to.be.ok;
+
+            clock.tick(2000);
             expect(pmdr.stop.calledOnce).to.be.ok;
         });
     });

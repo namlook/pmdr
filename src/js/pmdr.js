@@ -13,7 +13,7 @@ Pomodoro.prototype.start = function(duration) {
     this.remainingSeconds = this.duration;
     this.startedAt = Date.now();
     var that = this;
-    time = setTimeout(function(){
+    this.timer = setTimeout(function(){
         that.stop();
     }, this.duration * 1000);
 };
@@ -22,6 +22,9 @@ Pomodoro.prototype.stop = function() {
     this.isStarted = false;
     this.remainingSeconds = null;
     this.startedAt = null;
+
+    clearTimeout(this.timer);
+    this.timer = null;
 };
 
 // returns the number of remaining seconds till the end of the pomodoro
