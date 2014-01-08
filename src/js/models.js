@@ -18,13 +18,15 @@ var Pomodoro = Backbone.Model.extend({
 
         this.set('isStarted', true);
         this.set('remainingSeconds', this.get('duration'));
+        this.trigger('countedDown', this.get('remainingSeconds'));
 
         var that = this;
+        clearInterval(this._interval);
         this._interval = setInterval(function(){
             that.set('remainingSeconds', that.get('remainingSeconds') - 1);
             var remainingSeconds = that.get('remainingSeconds');
             that.trigger('countedDown', remainingSeconds);
-            if (remainingSeconds === 0){
+            if (remainingSeconds <= 0){
                 that.trigger('finished');
             }
         }, 1000);
