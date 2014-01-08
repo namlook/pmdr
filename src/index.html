@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>pmdr</title>
+
+	<link rel="stylesheet" href="" type="text/css" />
+</head>
+<body>
+
+
+	<h1>25:00</h1>
+
+	<button>start</button>
+
+
+<script>
+
+
+function Pomodoro() {
+    var timer;
+    
+    var start = function(callback) {
+        clearTimeout(timer);
+        // var args = [].slice.call(arguments);
+        return timer = setTimeout(function () {
+            // callback.apply(this, args);
+            alert("done!");
+        }, 25 * 60 * 1000);
+    };
+
+    var stop = function() {
+    	clearTimeout(timer);
+    };
+
+    return {
+    	start: start,
+    	stop: stop
+    }
+}
+
+var pmdr = Pomodoro();
+pmdr.start();
+
+
+</script>
+
+</body>
+</html>
