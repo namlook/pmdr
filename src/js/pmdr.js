@@ -18,3 +18,5 @@ function Pomodoro() {
         }
     }
 }
+
+module.exports = Pomodoro;
