@@ -14,30 +14,8 @@
     <button id="startTimer">start</button>
 
 
+<script src="js/pmdr.js"></script>
 <script>
-
-
-function Pomodoro() {
-    var timer;
-    
-    return {
-        start: function(callback) {
-            clearTimeout(timer);
-            // var args = [].slice.call(arguments);
-            return timer = setTimeout(function () {
-                // callback.apply(this, args);
-                alert("done!");
-            }, 25 * 60 * 1000);
-        },
-        stop: function() {
-            clearTimeout(timer);
-        },
-        getRemaining: function(){
-
-        }
-    }
-}
-
 var pmdr = Pomodoro();
 
 var startButton = document.getElementById('startTimer');
@@ -45,8 +23,6 @@ var startButton = document.getElementById('startTimer');
 startButton.addEventListener('click', function(){
     pmdr.start();
 });
-
-
 </script>
 
 </body>
