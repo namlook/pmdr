@@ -13,6 +13,7 @@ describe('Pomodoro', function() {
             pmdr.start();
             expect(pmdr.isStarted).to.be.true;
         });
+        it('should take an optional number of seconds');
     });
 
     describe('stop()', function() {
@@ -26,7 +27,24 @@ describe('Pomodoro', function() {
         });
     });
 
-    describe('getRemainingTime()', function() {
-        it('should give the time remaining before the end of timer');
+    describe('getRemainingSeconds()', function() {
+        it('should return null if the pomodoro is not started', function() {
+            var pmdr = new Pomodoro();
+            var remainingSeconds = pmdr.getRemainingSeconds();
+            expect(remainingSeconds).to.be.null;
+        });
+        it('should give the time remaining before the end of timer', function() {
+            var pmdr = new Pomodoro();
+            pmdr.start();
+            var remainingSeconds = pmdr.getRemainingSeconds();
+            expect(remainingSeconds).to.be.at.least(0);
+        });
+        it('should return null if the pomodoro is stopped', function() {
+            var pmdr = new Pomodoro();
+            pmdr.start();
+            pmdr.stop();
+            var remainingSeconds = pmdr.getRemainingSeconds();
+            expect(remainingSeconds).to.be.null;
+        });
     });
 });
