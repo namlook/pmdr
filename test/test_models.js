@@ -76,6 +76,13 @@ describe('Pomodoro', function() {
             });
             clock.tick(1000);
         });
+        it('should accept a callback without duration (25 minutes by default)', function(done) {
+            var pmdr = new Pomodoro();
+            pmdr.start(function(){
+                done();
+            });
+            clock.tick(25*60*1000);
+        });
     });
 
     describe('stop()', function() {
