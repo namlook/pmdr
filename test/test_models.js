@@ -23,26 +23,26 @@ describe('Pomodoro', function() {
     describe('start()', function() {
         it('should start a pomodoro', function() {
             var pmdr = new Pomodoro();
-            expect(pmdr.isStarted).to.be.false;
+            expect(pmdr.get('isStarted')).to.be.false;
 
             pmdr.start();
-            expect(pmdr.isStarted).to.be.true;
+            expect(pmdr.get('isStarted')).to.be.true;
         });
         it('should take an optional number of seconds', function() {
             var pmdr = new Pomodoro();
             pmdr.start(20);
-            expect(pmdr.duration).to.be.equal(20);
+            expect(pmdr.get('duration')).to.be.equal(20);
         });
         it('should have a default duration to 1500 (25 minutes)', function() {
             var pmdr = new Pomodoro();
             pmdr.start();
-            expect(pmdr.duration).to.be.equal(1500);
+            expect(pmdr.get('duration')).to.be.equal(1500);
         });
         it('should be stopped when the time is over', function() {
             var pmdr = new Pomodoro();
             pmdr.start(1);
             clock.tick(1000);
-            expect(pmdr.isStarted).to.be.false;
+            expect(pmdr.get('isStarted')).to.be.false;
         });
         it('should trigger the stop method when over', function() {
             var pmdr = new Pomodoro();
@@ -69,63 +69,80 @@ describe('Pomodoro', function() {
             clock.tick(2000);
             expect(pmdr.stop.calledOnce).to.be.ok;
         });
-        // it('should call the callback when the pomodoro is over', function(done) {
-        //     var pmdr = new Pomodoro();
-        //     pmdr.start(1, function(){
-        //         done();
-        //     });
-        //     clock.tick(1000);
-        // });
-        // it('should accept a callback without duration (25 minutes by default)', function(done) {
-        //     var pmdr = new Pomodoro();
-        //     pmdr.start(function(){
-        //         done();
-        //     });
-        //     clock.tick(25*60*1000);
-        // });
+        it('should call the callback when the pomodoro is over', function(done) {
+            var pmdr = new Pomodoro();
+            pmdr.start(1);
+            pmdr.onFinish(function(){
+                done();
+            });
+            clock.tick(1000);
+        });
     });
 
     describe('stop()', function() {
         it('should stop a pomodoro', function() {
             var pmdr = new Pomodoro();
             pmdr.start();
-            expect(pmdr.isStarted).to.be.true;
+            expect(pmdr.get('isStarted')).to.be.true;
 
             pmdr.stop();
-            expect(pmdr.isStarted).to.be.false;
+            expect(pmdr.get('isStarted')).to.be.false;
         });
     });
 
-    describe('getRemainingSeconds()', function() {
+    describe('onChange', function(){
+        it('should be triggered every each seconds', function(done) {
+            var pmdr = new Pomodoro();
+            pmdr.start(3);
+            var changedSpy = sinon.spy(function(){});
+            pmdr.onChange(changedSpy);
+            clock.tick(10000);
+            expect(changedSpy.calledThrice).to.be.ok;
+            done();
+        });
+        it('should pass the number of remaining seconds', function() {
+            var pmdr = new Pomodoro();
+            pmdr.start(3);
+            expect(pmdr.get('remainingSeconds')).to.be.equal(3);
+            clock.tick(1000);
+            expect(pmdr.get('remainingSeconds')).to.be.equal(2);
+            clock.tick(1000);
+            expect(pmdr.get('remainingSeconds')).to.be.equal(1);
+            clock.tick(1000);
+            expect(pmdr.get('remainingSeconds')).to.be.null;
+        });
+    });
+
+    describe('remainingSeconds', function() {
         it('should return null if the pomodoro is not started', function() {
             var pmdr = new Pomodoro();
-            var remainingSeconds = pmdr.getRemainingSeconds();
+            var remainingSeconds = pmdr.get('remainingSeconds');
             expect(remainingSeconds).to.be.null;
         });
         it('should return a positive number', function() {
             var pmdr = new Pomodoro();
             pmdr.start(20);
 
-            var remainingSeconds = pmdr.getRemainingSeconds();
+            var remainingSeconds = pmdr.get('remainingSeconds');
             expect(remainingSeconds).to.be.at.least(0);
         });
         it('should decrease of 1 every seconds', function() {
             var pmdr = new Pomodoro();
             pmdr.start(20);
 
-            var remainingSeconds = pmdr.getRemainingSeconds();
+            var remainingSeconds = pmdr.get('remainingSeconds');
             expect(remainingSeconds).to.be.equal(20);
 
             clock.tick(900);
-            remainingSeconds = pmdr.getRemainingSeconds();
+            remainingSeconds = pmdr.get('remainingSeconds');
             expect(remainingSeconds).to.be.equal(20);
 
             clock.tick(101);
-            remainingSeconds = pmdr.getRemainingSeconds();
+            remainingSeconds = pmdr.get('remainingSeconds');
             expect(remainingSeconds).to.be.equal(19);
 
             clock.tick(10000);
-            remainingSeconds = pmdr.getRemainingSeconds();
+            remainingSeconds = pmdr.get('remainingSeconds');
             expect(remainingSeconds).to.be.equal(9);
 
         });
@@ -133,7 +150,7 @@ describe('Pomodoro', function() {
             var pmdr = new Pomodoro();
             pmdr.start();
             pmdr.stop();
-            var remainingSeconds = pmdr.getRemainingSeconds();
+            var remainingSeconds = pmdr.get('remainingSeconds');
             expect(remainingSeconds).to.be.null;
         });
         it('should return null if the pomodoro is finished', function() {
@@ -141,7 +158,7 @@ describe('Pomodoro', function() {
             pmdr.start(20);
 
             clock.tick(25000);
-            remainingSeconds = pmdr.getRemainingSeconds();
+            remainingSeconds = pmdr.get('remainingSeconds');
             expect(remainingSeconds).to.be.null;
         });
     });
