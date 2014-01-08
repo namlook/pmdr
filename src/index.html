@@ -21,7 +21,9 @@ var pmdr = new Pomodoro();
 var startButton = document.getElementById('startTimer');
 
 startButton.addEventListener('click', function(){
-    pmdr.start();
+    pmdr.start(3, function(){
+        alert('done!');
+    });
 });
 </script>
 
