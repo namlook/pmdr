@@ -8,7 +8,7 @@ var Pomodoro = Backbone.Model.extend({
     },
 
     initialize: function() {
-        this.listenTo(this, 'finished', this.finish);
+        this.listenTo(this, 'finished', this.stop);
     },
 
     start: function(duration){
@@ -32,14 +32,10 @@ var Pomodoro = Backbone.Model.extend({
         }, 1000);
     },
 
-    finish: function() {
-        clearInterval(this._interval);
-        this.stop();
-    },
-
     stop: function() {
         this.set('isStarted', false);
         this.set('remainingSeconds', null);
+        clearInterval(this._interval);
     },
 
     onChange: function(callback) {
@@ -51,5 +47,3 @@ var Pomodoro = Backbone.Model.extend({
     }
 
 });
-
-module.exports = Pomodoro;

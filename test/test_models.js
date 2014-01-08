@@ -1,10 +1,12 @@
-var chai = require('chai');
-chai.Assertion.includeStack = true;
+// var chai = require('chai');
+// chai.Assertion.includeStack = true;
+// var expect = chai.expect;
+// var sinon = require('sinon');
+
+// var Pomodoro = require('../src/js/models');
+
+
 var expect = chai.expect;
-var sinon = require('sinon');
-
-var Pomodoro = require('../src/js/models');
-
 
 describe('Pomodoro', function() {
 
@@ -46,14 +48,13 @@ describe('Pomodoro', function() {
         });
         it('should trigger the stop method when over', function() {
             var pmdr = new Pomodoro();
-            sinon.spy(pmdr, "stop");
             pmdr.start(1);
 
+            expect(pmdr.get('isStarted')).to.be.true;
             clock.tick(500);
-            expect(pmdr.stop.calledOnce).to.be.false;
 
             clock.tick(600);
-            expect(pmdr.stop.calledOnce).to.be.ok;
+            expect(pmdr.get('isStarted')).to.be.false;
         });
         it('should clear the timer if stop is called manually', function() {
             var pmdr = new Pomodoro();
