@@ -9,23 +9,14 @@
 <body>
 
 
-    <h1>25:00</h1>
+    <h1 id="timerView"></h1>
 
     <button id="startTimer">start</button>
 
 
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 <script src="js/pmdr.js"></script>
-<script>
-var pmdr = new Pomodoro();
-
-var startButton = document.getElementById('startTimer');
-
-startButton.addEventListener('click', function(){
-    pmdr.start(3, function(){
-        alert('done!');
-    });
-});
-</script>
+<script src="js/ui.js"></script>
 
 </body>
 </html>
