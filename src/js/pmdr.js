@@ -6,9 +6,9 @@ var Pomodoro = function() {
 };
 
 Pomodoro.prototype.start = function(duration) {
-	if (duration) {
-		this.duration = duration;
-	}
+    if (duration) {
+        this.duration = duration;
+    }
     this.isStarted = true;
     this.remainingSeconds = duration;
 };
@@ -20,7 +20,7 @@ Pomodoro.prototype.stop = function() {
 
 // returns the number of remaining seconds till the end of the pomodoro
 Pomodoro.prototype.getRemainingSeconds = function() {
-	return this.remainingSeconds;
+    return this.remainingSeconds;
 };
 
 module.exports = Pomodoro;
