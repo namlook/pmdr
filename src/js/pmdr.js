@@ -14,7 +14,7 @@ Pomodoro.prototype.start = function(duration) {
     this.startedAt = Date.now();
     var that = this;
     time = setTimeout(function(){
-		that.stop();
+        that.stop();
     }, this.duration * 1000);
 };
 
