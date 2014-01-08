@@ -4,9 +4,19 @@ var CountdownView = Backbone.View.extend({
     initialize: function() {
         this.listenTo(this.model, 'countedDown', this.render);
     },
+
     render: function() {
-        this.$el.html(this.model.get('remainingSeconds'));
+        var value = this._prettifySeconds(this.model.get('remainingSeconds'));
+        this.$el.html(value);
+    },
+
+    _prettifySeconds: function(seconds) {
+        var minutes = parseInt(seconds/60, 10);
+        minutes = _.str.pad(minutes, 2, '0');
+        seconds = _.str.pad(seconds % 60, 2, '0');
+        return minutes+":"+seconds;
     }
+
 });
 
 var StartButtonView = Backbone.View.extend({
