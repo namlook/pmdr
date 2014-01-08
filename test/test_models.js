@@ -43,6 +43,17 @@ describe('Pomodoro', function() {
             clock.tick(1000);
             expect(pmdr.isStarted).to.be.false;
         });
+        it('should trigger the stop method when over', function() {
+            var pmdr = new Pomodoro();
+            sinon.spy(pmdr, "stop");
+            pmdr.start(1);
+
+            clock.tick(500);
+            expect(pmdr.stop.calledOnce).to.be.false;
+
+            clock.tick(600);
+            expect(pmdr.stop.calledOnce).to.be.ok;
+        });
     });
 
     describe('stop()', function() {
