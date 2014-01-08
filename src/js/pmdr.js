@@ -1,22 +1,21 @@
-function Pomodoro() {
+var Pomodoro = function() {
     var timer;
-
-    return {
-        start: function(callback) {
-            clearTimeout(timer);
-            // var args = [].slice.call(arguments);
-            return timer = setTimeout(function () {
-                // callback.apply(this, args);
-                alert("done!");
-            }, 1000);
-        },
-        stop: function() {
-            clearTimeout(timer);
-        },
-        getRemaining: function(){
-
-        }
-    }
+    var isStarted = false;
 }
+
+Pomodoro.prototype.start = function() {
+    this.isStarted = true;
+    clearTimeout(this.timer);
+    return timer = setTimeout(function () {
+        alert("done!");
+    }, 1000);
+};
+
+Pomodoro.prototype.stop = function() {
+    this.isStarted = false;
+    clearTimeout(this.timer);
+};
+
+Pomodoro.prototype.getRemaining = function() {}
 
 module.exports = Pomodoro;

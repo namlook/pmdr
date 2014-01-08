@@ -7,7 +7,7 @@ var Pomodoro = require('../src/js/pmdr');
 describe('Pomodoro', function() {
     describe('start()', function() {
         it('should start a pomodoro', function() {
-            var pmdr = Pomodoro();
+            var pmdr = new Pomodoro();
             expect(pmdr.isStarted).to.be.false;
 
             pmdr.start();
@@ -17,7 +17,7 @@ describe('Pomodoro', function() {
 
     describe('stop()', function() {
         it('should stop a pomodoro', function() {
-            var pmdr = Pomodoro();
+            var pmdr = new Pomodoro();
             pmdr.start();
             expect(pmdr.isStarted).to.be.true;
 
