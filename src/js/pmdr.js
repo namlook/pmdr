@@ -1,3 +1,4 @@
+
 var Pomodoro = function() {
     this.timer = null;
     this.isStarted = false;
@@ -5,7 +6,16 @@ var Pomodoro = function() {
     this.duration = 25 * 60;
 };
 
-Pomodoro.prototype.start = function(duration) {
+Pomodoro.prototype.start = function(duration, callback) {
+    if (!callback) {
+        if (typeof(duration) === 'function'){
+            callback = duration;
+            duration = undefined;
+        }
+        else {
+            callback = function(){};
+        }
+    }
     if (duration) {
         this.duration = duration;
     }
@@ -14,6 +24,7 @@ Pomodoro.prototype.start = function(duration) {
     this.startedAt = Date.now();
     var that = this;
     this.timer = setTimeout(function(){
+        callback();
         that.stop();
     }, this.duration * 1000);
 };
