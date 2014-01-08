@@ -3,7 +3,7 @@ chai.Assertion.includeStack = true;
 var expect = chai.expect;
 var sinon = require('sinon');
 
-var Pomodoro = require('../src/js/pmdr');
+var Pomodoro = require('../src/js/models');
 
 
 describe('Pomodoro', function() {
@@ -69,20 +69,20 @@ describe('Pomodoro', function() {
             clock.tick(2000);
             expect(pmdr.stop.calledOnce).to.be.ok;
         });
-        it('should call the callback when the pomodoro is over', function(done) {
-            var pmdr = new Pomodoro();
-            pmdr.start(1, function(){
-                done();
-            });
-            clock.tick(1000);
-        });
-        it('should accept a callback without duration (25 minutes by default)', function(done) {
-            var pmdr = new Pomodoro();
-            pmdr.start(function(){
-                done();
-            });
-            clock.tick(25*60*1000);
-        });
+        // it('should call the callback when the pomodoro is over', function(done) {
+        //     var pmdr = new Pomodoro();
+        //     pmdr.start(1, function(){
+        //         done();
+        //     });
+        //     clock.tick(1000);
+        // });
+        // it('should accept a callback without duration (25 minutes by default)', function(done) {
+        //     var pmdr = new Pomodoro();
+        //     pmdr.start(function(){
+        //         done();
+        //     });
+        //     clock.tick(25*60*1000);
+        // });
     });
 
     describe('stop()', function() {

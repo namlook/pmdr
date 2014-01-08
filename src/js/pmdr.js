@@ -48,4 +48,3 @@ Pomodoro.prototype.getRemainingSeconds = function() {
     return this.duration - elapsedSeconds;
 };
 
-module.exports = Pomodoro;

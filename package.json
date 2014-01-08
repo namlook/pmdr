@@ -6,7 +6,11 @@
   "directories": {
     "test": "test"
   },
-  "dependencies": {},
+  "dependencies": {
+    "backbone": "~1.1.0",
+    "browserify-jquery": "~1.6.3",
+    "browserify": "~3.19.1"
+  },
   "devDependencies": {
     "mocha": "~1.16.2",
     "chai": "~1.8.1",
