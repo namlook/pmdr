@@ -58,7 +58,8 @@ describe('Pomodoro', function() {
         });
         it('should return a positive number', function() {
             var pmdr = new Pomodoro();
-            pmdr.start();
+            pmdr.start(20);
+
             var remainingSeconds = pmdr.getRemainingSeconds();
             expect(remainingSeconds).to.be.at.least(0);
         });
@@ -68,17 +69,18 @@ describe('Pomodoro', function() {
 
             var remainingSeconds = pmdr.getRemainingSeconds();
             expect(remainingSeconds).to.be.equal(20);
-            console.log(remainingSeconds);
 
-            clock.tick(999);
+            clock.tick(900);
+            remainingSeconds = pmdr.getRemainingSeconds();
+            expect(remainingSeconds).to.be.equal(20);
+
+            clock.tick(101);
             remainingSeconds = pmdr.getRemainingSeconds();
             expect(remainingSeconds).to.be.equal(19);
-            console.log(remainingSeconds);
 
-            clock.tick(2);
+            clock.tick(10000);
             remainingSeconds = pmdr.getRemainingSeconds();
-            expect(remainingSeconds).to.be.equal(18);
-            console.log(remainingSeconds);
+            expect(remainingSeconds).to.be.equal(9);
 
         });
         it('should return null if the pomodoro is stopped', function() {
@@ -86,6 +88,14 @@ describe('Pomodoro', function() {
             pmdr.start();
             pmdr.stop();
             var remainingSeconds = pmdr.getRemainingSeconds();
+            expect(remainingSeconds).to.be.null;
+        });
+        it('should return null if the pomodoro is finished', function() {
+            var pmdr = new Pomodoro();
+            pmdr.start(20);
+
+            clock.tick(25000);
+            remainingSeconds = pmdr.getRemainingSeconds();
             expect(remainingSeconds).to.be.null;
         });
     });
