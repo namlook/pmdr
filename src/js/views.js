@@ -20,13 +20,32 @@ var CountdownView = Backbone.View.extend({
 
 });
 
-var StartButtonView = Backbone.View.extend({
-    el: '#startButton',
+var CtrlButtonView = Backbone.View.extend({
+    el: '#ctrlButton',
     events: {
-        'click': 'startTimer'
+        'click': 'toggleTimer'
     },
-    startTimer: function() {
-        this.model.start();
+
+    initialize: function() {
+        this.listenTo(this.model, 'change:isStarted', this.render);
+    },
+
+    toggleTimer: function() {
+        console.log(this.model.get('isStarted'));
+        if(!this.model.get('isStarted')) {
+            this.model.start();
+        } else {
+            this.model.stop();
+        }
+    },
+
+    render: function() {
+        console.log(this.model.get('isStarted'));
+        if(!this.model.get('isStarted')) {
+            this.$el.text('stop');
+        } else {
+            this.$el.text('start');
+        }
     }
 });
 
@@ -34,7 +53,7 @@ var timer = new Timer();
 var countdownView = new CountdownView({
     model: timer
 });
-var startButtonView = new StartButtonView({
+var ctrlButtonView = new CtrlButtonView({
     model: timer
 });
 
