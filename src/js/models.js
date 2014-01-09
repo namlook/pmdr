@@ -35,6 +35,7 @@ Pmdr.Models.Timer = Backbone.Model.extend({
     },
 
     start: function(options){
+        options = options || {};
         if (options.duration) {
             this.set('duration', options.duration);
         }
