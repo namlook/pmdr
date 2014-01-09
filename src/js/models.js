@@ -20,8 +20,6 @@ Pmdr.Models.Pomodoros = Backbone.Collection.extend({
 
 Pmdr.Models.Timer = Backbone.Model.extend({
 
-    localStorage: new Backbone.LocalStorage("timer"),
-
     defaults: {
         isStarted: false,
         startedAt: null,
@@ -57,7 +55,6 @@ Pmdr.Models.Timer = Backbone.Model.extend({
         }, 1000);
 
         this.set('startedAt', Date.now());
-        this.save();
         this.trigger('started');
     },
 
@@ -66,6 +63,7 @@ Pmdr.Models.Timer = Backbone.Model.extend({
         this.set('isStarted', false);
         this.set('startedAt', null);
         clearInterval(this._interval);
+        this.trigger('stopped');
     },
 
     onStart: function(callback) {
@@ -74,6 +72,10 @@ Pmdr.Models.Timer = Backbone.Model.extend({
 
     onChange: function(callback) {
         this.listenTo(this, 'countedDown', callback);
+    },
+
+    onStop: function(callback) {
+        this.listenTo(this, 'stopped', callback);
     },
 
     onFinish: function(callback) {

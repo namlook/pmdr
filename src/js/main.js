@@ -3,15 +3,18 @@ var Pmdr = Pmdr || {};
 
 Pmdr.App = (function(Models, Views, utils) {
     var createTimer = function() {
-        var timer = new Models.Timer();
-
-        var timerId = localStorage.getItem('timer');
-        if (timerId) {
-            timer.fetch(timerId);
+        var data = JSON.parse(localStorage.getItem('timer'));
+        var timer = new Models.Timer(data);
+        var startedAt = timer.get('startedAt');
+        if (timer.get('isStarted')) {
+            var delta = (Date.now() - startedAt) / 1000;
+            if (delta > 0) {
+                var newDuration = parseInt(timer.get('duration') - delta, 10);
+                timer.start({duration: newDuration});
+            }
         }
-
         return timer;
-    }
+    };
 
     var run = function() {
         var pomodoros = new Models.Pomodoros();
@@ -19,15 +22,20 @@ Pmdr.App = (function(Models, Views, utils) {
         pomodoros.fetch();
 
         var timer = createTimer();
-        console.log(timer.get('startedAt'));
-        console.log(timer.id);
-        console.log(timer.get('duration'));
 
         var countdownView = new Views.CountdownView({
             model: timer
         });
         var ctrlView = new Views.CtrlView({
             model: timer
+        });
+
+        timer.onStart(function() {
+            localStorage.setItem('timer', JSON.stringify(timer.toJSON()));
+        });
+
+        timer.onStop(function() {
+            localStorage.removeItem('timer');
         });
 
         timer.onFinish(function(){

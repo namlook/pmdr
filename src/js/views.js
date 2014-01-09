@@ -7,6 +7,7 @@ Pmdr.Views.CountdownView = Backbone.View.extend({
     initialize: function() {
         this.listenTo(this.model, 'countedDown', this.render);
         this.listenTo(this.model, 'change:isStarted', this.render);
+        this.render();
     },
 
     render: function() {
