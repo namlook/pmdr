@@ -20,7 +20,7 @@ var CountdownView = Backbone.View.extend({
 
 });
 
-var ButtonView = Backbone.View.extend({
+var StartButtonView = Backbone.View.extend({
     tagName: 'button',
     className: 'ctrlButton',
     events: {
@@ -43,19 +43,19 @@ var CtrlView = Backbone.View.extend({
     el: '#ctrlView',
 
     initialize: function() {
-        this.pomodoroButton = new ButtonView({
+        this.pomodoroButton = new StartButtonView({
             'model': this.model,
             'title': 'start',
             'duration': 25 * 60
         });
 
-        this.shortBreakButton = new ButtonView({
+        this.shortBreakButton = new StartButtonView({
             'model': this.model,
             'title': 'break',
             'duration': 5 * 60
         });
 
-        this.longBreakButton = new ButtonView({
+        this.longBreakButton = new StartButtonView({
             'model': this.model,
             'title': 'long break',
             'duration': 15 * 60
