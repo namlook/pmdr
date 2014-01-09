@@ -3,10 +3,15 @@ var CountdownView = Backbone.View.extend({
     el: '#countdown',
     initialize: function() {
         this.listenTo(this.model, 'countedDown', this.render);
+        this.listenTo(this.model, 'change:isStarted', this.render);
     },
 
     render: function() {
-        var value = this._prettifySeconds(this.model.get('remainingSeconds'));
+        var remainingSeconds = this.model.get('remainingSeconds');
+        if (remainingSeconds === null) {
+            remainingSeconds = 0;
+        }
+        var value = this._prettifySeconds(remainingSeconds);
         this.$el.html(value);
         return this;
     },
@@ -32,17 +37,46 @@ var StartButtonView = Backbone.View.extend({
     initialize: function(options) {
         this.title = options.title;
         this.duration = options.duration;
+        this.listenTo(this.model, 'change:isStarted', this.render);
     },
 
     render: function() {
         this.$el.text(this.title);
+        this.$el.prop('disabled', this.model.get('isStarted'));
         return this;
     },
 
     start: function() {
         this.model.start(this.duration);
     }
+
 });
+
+
+var StopButtonView = Backbone.View.extend({
+
+    tagName: 'button',
+    className: 'ctrlButton',
+
+    events: {
+        'click': 'stop'
+    },
+
+    initialize: function() {
+        this.listenTo(this.model, 'change:isStarted', this.render);
+    },
+
+    render: function() {
+        this.$el.text('stop');
+        this.$el.prop('disabled', !this.model.get('isStarted'));
+        return this;
+    },
+
+    stop: function() {
+        this.model.stop();
+    }
+});
+
 
 var CtrlView = Backbone.View.extend({
     el: '#ctrlView',
@@ -66,7 +100,9 @@ var CtrlView = Backbone.View.extend({
             'duration': 15 * 60
         });
 
-        this.listenTo(this.model, 'change:isStarted', this.updateButtons);
+        this.stopButton = new StopButtonView({
+            'model': this.model
+        });
 
         this.render();
     },
@@ -75,18 +111,12 @@ var CtrlView = Backbone.View.extend({
         this.model.stop();
     },
 
-    updateButtons: function() {
-        var started = this.model.get('isStarted');
-        this.pomodoroButton.$el.prop('disabled', started);
-        this.shortBreakButton.$el.prop('disabled', started);
-        this.longBreakButton.$el.prop('disabled', started);
-    },
-
     render: function() {
         this.$el.empty();
         this.$el.append(this.pomodoroButton.render().$el);
         this.$el.append(this.shortBreakButton.render().$el);
         this.$el.append(this.longBreakButton.render().$el);
+        this.$el.append(this.stopButton.render().$el);
     }
 });
 

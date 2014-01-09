@@ -33,8 +33,8 @@ var Timer = Backbone.Model.extend({
     },
 
     stop: function() {
-        this.set('isStarted', false);
         this.set('remainingSeconds', null);
+        this.set('isStarted', false);
         clearInterval(this._interval);
     },
 
