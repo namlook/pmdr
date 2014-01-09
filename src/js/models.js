@@ -10,7 +10,11 @@ Pmdr.Models.Pomodoro = Backbone.Model.extend({
 
 
 Pmdr.Models.Pomodoros = Backbone.Collection.extend({
+
+    localStorage: new Backbone.LocalStorage("pomodoros"),
+
     model: Pmdr.Models.Pomodoro
+
 });
 
 
