@@ -1,5 +1,5 @@
 
-var Pomodoro = Backbone.Model.extend({
+var Timer = Backbone.Model.extend({
 
     defaults: {
         isStarted: false,

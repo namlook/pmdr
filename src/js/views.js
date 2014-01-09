@@ -29,14 +29,14 @@ var StartButtonView = Backbone.View.extend({
     }
 });
 
-var pmdr = new Pomodoro();
+var timer = new Timer();
 var countdownView = new CountdownView({
-    model: pmdr
+    model: timer
 })
 var startButtonView = new StartButtonView({
-    model: pmdr
+    model: timer
 })
 
-pmdr.onFinish(function(){
+timer.onFinish(function(){
     alert('done');
 });
