@@ -1,0 +1,22 @@
+
+#countdown {
+    font-size: 10em;
+    text-align: center;
+}
+
+#ctrlView {
+    text-align: center;
+}
+
+form {
+    text-align: center;
+}
+
+label {
+    display: inline;
+}
+
+.pomodoros {
+    text-align: center;
+    color: red;
+}

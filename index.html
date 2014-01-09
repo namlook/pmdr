@@ -1,1 +1,51 @@
-src/index.html
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>pmdr</title>
+
+    <!-- If you are using CSS version, only link these 2 files, you may add app.css to use for your overrides if you like. -->
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/foundation.css">
+
+    <link rel="stylesheet" href="css/pmdr.css" type="text/css" />
+
+</head>
+<body>
+
+<div class="row">
+  <div class="small-6 large-centered columns">
+
+        <h1 id="countdown"></h1>
+
+        <div id="ctrlView"></div>
+
+        <form>
+            <label for="dynamicTitleCb">Show dynamic title</label>
+            <input type="checkbox" id="dynamicTitleCb" class="inline" />
+        </form>
+
+        <h1 class="pomodoros"> <span id="pomodoros">0</span> pomodoros</h1>
+  </div>
+</div>
+
+    <audio id="audioAlert">
+        <source src="audio/bong.ogg" type="audio/ogg" />
+        <source src="audio/bong.mp3" type="audio/mpeg" />
+        <source src="audio/bong.wav" type="audio/wave" />
+    </audio>
+
+
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script src="https://raw.github.com/jashkenas/underscore/master/underscore-min.js"></script>
+<script src="https://raw.github.com/jashkenas/backbone/master/backbone-min.js"></script>
+<script src="https://raw2.github.com/jeromegn/Backbone.localStorage/master/backbone.localStorage-min.js"></script>
+<script src="http://epeli.github.io/underscore.string/dist/underscore.string.min.js"></script>
+
+<script src="js/utils.js"></script>
+<script src="js/models.js"></script>
+<script src="js/views.js"></script>
+<script src="js/main.js"></script>
+
+</body>
+</html>
