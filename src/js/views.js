@@ -20,32 +20,59 @@ var CountdownView = Backbone.View.extend({
 
 });
 
-var CtrlButtonView = Backbone.View.extend({
-    el: '#ctrlButton',
+var ButtonView = Backbone.View.extend({
+    tagName: 'button',
+    className: 'ctrlButton',
     events: {
-        'click': 'toggleTimer'
+        'click': 'start'
     },
+    initialize: function(options) {
+        this.title = options.title;
+        this.duration = options.duration;
+    },
+    render: function() {
+        this.$el.text(this.title);
+        return this;
+    },
+    start: function() {
+        this.model.start(this.duration);
+    }
+});
+
+var CtrlView = Backbone.View.extend({
+    el: '#ctrlView',
 
     initialize: function() {
+        this.pomodoroButton = new ButtonView({
+            'model': this.model,
+            'title': 'start',
+            'duration': 25 * 60
+        });
+
+        this.shortBreakButton = new ButtonView({
+            'model': this.model,
+            'title': 'break',
+            'duration': 5 * 60
+        });
+
+        this.longBreakButton = new ButtonView({
+            'model': this.model,
+            'title': 'long break',
+            'duration': 15 * 60
+        });
+
         this.listenTo(this.model, 'change:isStarted', this.render);
+        this.render();
     },
 
-    toggleTimer: function() {
-        console.log(this.model.get('isStarted'));
-        if(!this.model.get('isStarted')) {
-            this.model.start();
-        } else {
-            this.model.stop();
-        }
+    stopTimer: function() {
     },
 
     render: function() {
-        console.log(this.model.get('isStarted'));
-        if(!this.model.get('isStarted')) {
-            this.$el.text('stop');
-        } else {
-            this.$el.text('start');
-        }
+        this.$el.empty();
+        this.$el.append(this.pomodoroButton.render().$el),
+        this.$el.append(this.shortBreakButton.render().$el)
+        this.$el.append(this.longBreakButton.render().$el);
     }
 });
 
@@ -53,7 +80,7 @@ var timer = new Timer();
 var countdownView = new CountdownView({
     model: timer
 });
-var ctrlButtonView = new CtrlButtonView({
+var ctrlView = new CtrlView({
     model: timer
 });
 
