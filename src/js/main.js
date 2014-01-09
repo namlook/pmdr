@@ -22,6 +22,9 @@ Pmdr.App = (function(Models, Views, utils) {
             else {
                 utils.notify("Break's over", {body: 'get back to work !'});
             }
+
+            var audioElt = document.getElementById('audioAlert');
+            audioElt.play();
         });
     };
 
