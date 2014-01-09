@@ -1,14 +1,14 @@
 
 #countdown {
-	font-size: 10em;
-	text-align: center;
+    font-size: 10em;
+    text-align: center;
 }
 
 #ctrlView {
-	text-align: center;
+    text-align: center;
 }
 
 .pomodoros {
-	text-align: center;
-	color: red;
+    text-align: center;
+    color: red;
 }
