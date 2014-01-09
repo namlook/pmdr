@@ -24,11 +24,6 @@ Pmdr.Models.Timer = Backbone.Model.extend({
 
     initialize: function() {
         this.listenTo(this, 'finished', this.stop);
-        this.pomodoros = new Pmdr.Models.Pomodoros();
-        var that = this;
-        this.onFinish(function() {
-            that.pomodoros.add({createdAt: new Date()});
-        });
     },
 
     start: function(duration){
