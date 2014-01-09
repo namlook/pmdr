@@ -3,7 +3,14 @@ var Pmdr = Pmdr || {};
 
 Pmdr.App = (function(Models, Views, utils) {
     var createTimer = function() {
-        var data = JSON.parse(localStorage.getItem('timer'));
+        var data;
+        try {
+            data = JSON.parse(localStorage.getItem('timer'));
+        } catch(SyntaxError) {
+            data = null;
+            localStorage.removeItem('timer');
+        }
+
         var timer = new Models.Timer(data);
         var startedAt = timer.get('startedAt');
         if (timer.get('isStarted')) {
