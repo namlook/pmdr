@@ -1,5 +1,8 @@
 
-var CountdownView = Backbone.View.extend({
+var Pmdr = Pmdr || {};
+Pmdr.Views = {};
+
+Pmdr.Views.CountdownView = Backbone.View.extend({
     el: '#countdown',
     initialize: function() {
         this.listenTo(this.model, 'countedDown', this.render);
@@ -24,7 +27,7 @@ var CountdownView = Backbone.View.extend({
     }
 });
 
-var PomodorosView = Backbone.View.extend({
+Pmdr.Views.PomodorosView = Backbone.View.extend({
 
     el: '#pomodoros',
 
@@ -39,7 +42,7 @@ var PomodorosView = Backbone.View.extend({
 
 });
 
-var StartButtonView = Backbone.View.extend({
+Pmdr.Views.StartButtonView = Backbone.View.extend({
 
     tagName: 'button',
     className: 'ctrlButton',
@@ -67,7 +70,7 @@ var StartButtonView = Backbone.View.extend({
 });
 
 
-var StopButtonView = Backbone.View.extend({
+Pmdr.Views.StopButtonView = Backbone.View.extend({
 
     tagName: 'button',
     className: 'ctrlButton',
@@ -92,29 +95,29 @@ var StopButtonView = Backbone.View.extend({
 });
 
 
-var CtrlView = Backbone.View.extend({
+Pmdr.Views.CtrlView = Backbone.View.extend({
     el: '#ctrlView',
 
     initialize: function() {
-        this.pomodoroButton = new StartButtonView({
+        this.pomodoroButton = new Pmdr.Views.StartButtonView({
             'model': this.model,
             'title': 'start',
             'duration': 25 * 60
         });
 
-        this.shortBreakButton = new StartButtonView({
+        this.shortBreakButton = new Pmdr.Views.StartButtonView({
             'model': this.model,
             'title': 'break',
             'duration': 5 * 60
         });
 
-        this.longBreakButton = new StartButtonView({
+        this.longBreakButton = new Pmdr.Views.StartButtonView({
             'model': this.model,
             'title': 'long break',
             'duration': 15 * 60
         });
 
-        this.stopButton = new StopButtonView({
+        this.stopButton = new Pmdr.Views.StopButtonView({
             'model': this.model
         });
 
@@ -132,19 +135,4 @@ var CtrlView = Backbone.View.extend({
         this.$el.append(this.longBreakButton.render().$el);
         this.$el.append(this.stopButton.render().$el);
     }
-});
-
-var timer = new Timer();
-var countdownView = new CountdownView({
-    model: timer
-});
-var ctrlView = new CtrlView({
-    model: timer
-});
-
-var pomodoros = new Pomodoros();
-var pomodorosView = new PomodorosView({collection: pomodoros});
-
-timer.onFinish(function(){
-    alert('done');
 });

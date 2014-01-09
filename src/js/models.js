@@ -1,17 +1,20 @@
 
-var Pomodoro = Backbone.Model.extend({
+var Pmdr = {};
+Pmdr.Models = {};
+
+Pmdr.Models.Pomodoro = Backbone.Model.extend({
     defaults: {
         createdAt: null
     }
 });
 
 
-var Pomodoros = Backbone.Collection.extend({
-    model: Pomodoro
+Pmdr.Models.Pomodoros = Backbone.Collection.extend({
+    model: Pmdr.Models.Pomodoro
 });
 
 
-var Timer = Backbone.Model.extend({
+Pmdr.Models.Timer = Backbone.Model.extend({
 
     defaults: {
         isStarted: false,
@@ -21,7 +24,7 @@ var Timer = Backbone.Model.extend({
 
     initialize: function() {
         this.listenTo(this, 'finished', this.stop);
-        this.pomodoros = new Pomodoros();
+        this.pomodoros = new Pmdr.Models.Pomodoros();
         var that = this;
         this.onFinish(function() {
             that.pomodoros.add({createdAt: new Date()});
@@ -64,4 +67,3 @@ var Timer = Backbone.Model.extend({
     }
 
 });
-
