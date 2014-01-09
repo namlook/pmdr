@@ -145,6 +145,7 @@ Pmdr.Views.DynamicTitleView = Backbone.View.extend({
     initialize: function() {
         this.onChange();
         this.listenTo(this.model, 'countedDown', this.render);
+        this.listenTo(this.model, 'stopped', this.render);
     },
     onChange: function() {
         this.dynamicTitle = this.$el.prop('checked');
