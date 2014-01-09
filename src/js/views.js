@@ -15,17 +15,10 @@ Pmdr.Views.CountdownView = Backbone.View.extend({
         if (remainingSeconds === null) {
             remainingSeconds = 0;
         }
-        var value = this._prettifySeconds(remainingSeconds);
+        var value = Pmdr.utils.prettifySeconds(remainingSeconds);
         this.$el.html(value);
         return this;
     },
-
-    _prettifySeconds: function(seconds) {
-        var minutes = parseInt(seconds/60, 10);
-        minutes = _.str.pad(minutes, 2, '0');
-        seconds = _.str.pad(seconds % 60, 2, '0');
-        return minutes+":"+seconds;
-    }
 });
 
 Pmdr.Views.PomodorosView = Backbone.View.extend({
@@ -141,5 +134,29 @@ Pmdr.Views.CtrlView = Backbone.View.extend({
         this.$el.append(this.shortBreakButton.render().$el);
         this.$el.append(this.longBreakButton.render().$el);
         this.$el.append(this.stopButton.render().$el);
+    }
+});
+
+Pmdr.Views.DynamicTitleView = Backbone.View.extend({
+    el: '#dynamicTitleCb',
+    events: {
+        change: 'onChange'
+    },
+    initialize: function() {
+        this.onChange();
+        this.listenTo(this.model, 'countedDown', this.render);
+    },
+    onChange: function() {
+        this.dynamicTitle = this.$el.prop('checked');
+        this.render();
+    },
+    render: function() {
+        var title = 'Pmdr';
+
+        if (this.dynamicTitle) {
+            title = Pmdr.utils.prettifySeconds(this.model.get('remainingSeconds'));
+        }
+
+        $('title').text(title);
     }
 });

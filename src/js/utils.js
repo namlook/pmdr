@@ -24,3 +24,10 @@ Pmdr.utils.notify = function(title, options) {
         }
     }
 };
+
+Pmdr.utils.prettifySeconds = function(seconds) {
+    var minutes = parseInt(seconds/60, 10);
+    minutes = _.str.pad(minutes, 2, '0');
+    seconds = _.str.pad(seconds % 60, 2, '0');
+    return minutes+":"+seconds;
+};

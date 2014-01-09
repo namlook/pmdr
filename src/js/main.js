@@ -36,6 +36,9 @@ Pmdr.App = (function(Models, Views, utils) {
         var ctrlView = new Views.CtrlView({
             model: timer
         });
+        var dynamicTitleView = new Views.DynamicTitleView({
+            model: timer
+        });
 
         timer.onStart(function() {
             localStorage.setItem('timer', JSON.stringify(timer.toJSON()));
