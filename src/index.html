@@ -15,24 +15,20 @@
 
 <div class="row">
   <div class="small-6 large-centered columns">
-        
+
         <h1 id="countdown"></h1>
 
         <div id="ctrlView"></div>
 
-        <div class="row">
-            <div class="small-9 columns">
-                <label for="dynamicTitleCb" class="inline">Show dynamic title</label>
-            </div>
-            <div class="small-3 columns">
-                <input type="checkbox" id="dynamicTitleCb" class="inline" />
-            </div>
-        </div>
+        <form>
+            <label for="dynamicTitleCb">Show dynamic title</label>
+            <input type="checkbox" id="dynamicTitleCb" class="inline" />
+        </form>
 
         <h1 class="pomodoros"> <span id="pomodoros">0</span> pomodoros</h1>
   </div>
 </div>
-  
+
     <audio id="audioAlert">
         <source src="audio/bong.ogg" type="audio/ogg" />
         <source src="audio/bong.mp3" type="audio/mpeg" />
