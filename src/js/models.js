@@ -1,5 +1,5 @@
 
-var Pmdr = {};
+var Pmdr = Pmdr || {};
 Pmdr.Models = {};
 
 Pmdr.Models.Pomodoro = Backbone.Model.extend({
