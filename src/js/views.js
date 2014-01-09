@@ -21,19 +21,24 @@ var CountdownView = Backbone.View.extend({
 });
 
 var StartButtonView = Backbone.View.extend({
+
     tagName: 'button',
     className: 'ctrlButton',
+
     events: {
         'click': 'start'
     },
+
     initialize: function(options) {
         this.title = options.title;
         this.duration = options.duration;
     },
+
     render: function() {
         this.$el.text(this.title);
         return this;
     },
+
     start: function() {
         this.model.start(this.duration);
     }
@@ -61,17 +66,26 @@ var CtrlView = Backbone.View.extend({
             'duration': 15 * 60
         });
 
-        this.listenTo(this.model, 'change:isStarted', this.render);
+        this.listenTo(this.model, 'change:isStarted', this.updateButtons);
+
         this.render();
     },
 
     stopTimer: function() {
+        this.model.stop();
+    },
+
+    updateButtons: function() {
+        var started = this.model.get('isStarted');
+        this.pomodoroButton.$el.prop('disabled', started);
+        this.shortBreakButton.$el.prop('disabled', started);
+        this.longBreakButton.$el.prop('disabled', started);
     },
 
     render: function() {
         this.$el.empty();
-        this.$el.append(this.pomodoroButton.render().$el),
-        this.$el.append(this.shortBreakButton.render().$el)
+        this.$el.append(this.pomodoroButton.render().$el);
+        this.$el.append(this.shortBreakButton.render().$el);
         this.$el.append(this.longBreakButton.render().$el);
     }
 });
