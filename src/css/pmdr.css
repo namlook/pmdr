@@ -8,6 +8,10 @@
     text-align: center;
 }
 
+label {
+    display: inline;
+}
+
 .pomodoros {
     text-align: center;
     color: red;
