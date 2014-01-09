@@ -14,14 +14,15 @@ Pmdr.App = (function(Models, Views) {
         var pomodorosView = new Views.PomodorosView({collection: pomodoros});
 
         timer.onFinish(function(){
-            // TODO check timer type before saving pomodoro
-            pomodoros.add({createdAt: new Date()});
+            if (this.get('type') === 'pomodoro') {
+                pomodoros.add({createdAt: new Date()});
+            }
             alert('done');
         });
-    }
+    };
 
     return {
         'run': run
-    }
+    };
 })(Pmdr.Models, Pmdr.Views);
 Pmdr.App.run();
