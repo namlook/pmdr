@@ -1,6 +1,7 @@
 var Pmdr = Pmdr || {};
 
-Pmdr.App = (function(Models, Views) {
+
+Pmdr.App = (function(Models, Views, utils) {
     var run = function() {
         var timer = new Models.Timer();
         var countdownView = new Views.CountdownView({
@@ -16,13 +17,16 @@ Pmdr.App = (function(Models, Views) {
         timer.onFinish(function(){
             if (this.get('type') === 'pomodoro') {
                 pomodoros.add({createdAt: new Date()});
+                utils.notify('Pomodoro finished !', {body: 'time for a break'});
             }
-            alert('done');
+            else {
+                utils.notify("Break's over", {body: 'get back to work !'});
+            }
         });
     };
 
     return {
         'run': run
     };
-})(Pmdr.Models, Pmdr.Views);
+})(Pmdr.Models, Pmdr.Views, Pmdr.utils);
 Pmdr.App.run();
