@@ -22,6 +22,20 @@ var CountdownView = Backbone.View.extend({
         seconds = _.str.pad(seconds % 60, 2, '0');
         return minutes+":"+seconds;
     }
+});
+
+var PomodorosView = Backbone.View.extend({
+
+    el: '#pomodoros',
+
+    initialize: function() {
+        this.listenTo(this.collection, 'add', this.render);
+    },
+
+    render: function() {
+        this.$el.html(this.collection.length);
+        return this;
+    }
 
 });
 
@@ -127,6 +141,9 @@ var countdownView = new CountdownView({
 var ctrlView = new CtrlView({
     model: timer
 });
+
+var pomodoros = new Pomodoros();
+var pomodorosView = new PomodorosView({collection: pomodoros});
 
 timer.onFinish(function(){
     alert('done');
