@@ -53,6 +53,7 @@ Pmdr.Views.StartButtonView = Backbone.View.extend({
 
     initialize: function(options) {
         this.title = options.title;
+        this.type = options.type;
         this.duration = options.duration;
         this.listenTo(this.model, 'change:isStarted', this.render);
     },
@@ -64,9 +65,11 @@ Pmdr.Views.StartButtonView = Backbone.View.extend({
     },
 
     start: function() {
-        this.model.start(this.duration);
+        this.model.start({
+            duration: this.duration,
+            type: this.type
+        });
     }
-
 });
 
 
@@ -102,19 +105,22 @@ Pmdr.Views.CtrlView = Backbone.View.extend({
         this.pomodoroButton = new Pmdr.Views.StartButtonView({
             'model': this.model,
             'title': 'start',
-            'duration': 25 * 60
+            'duration': 25 * 60,
+            'type': 'pomodoro',
         });
 
         this.shortBreakButton = new Pmdr.Views.StartButtonView({
             'model': this.model,
             'title': 'break',
-            'duration': 5 * 60
+            'duration': 5 * 60,
+            'type': 'short-break',
         });
 
         this.longBreakButton = new Pmdr.Views.StartButtonView({
             'model': this.model,
             'title': 'long break',
-            'duration': 15 * 60
+            'duration': 15 * 60,
+            'type': 'long-break',
         });
 
         this.stopButton = new Pmdr.Views.StopButtonView({

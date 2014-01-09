@@ -14,6 +14,7 @@ Pmdr.App = (function(Models, Views) {
         var pomodorosView = new Views.PomodorosView({collection: pomodoros});
 
         timer.onFinish(function(){
+            // TODO check timer type before saving pomodoro
             pomodoros.add({createdAt: new Date()});
             alert('done');
         });

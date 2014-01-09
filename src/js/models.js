@@ -19,17 +19,19 @@ Pmdr.Models.Timer = Backbone.Model.extend({
     defaults: {
         isStarted: false,
         duration: 25 * 60,
-        remainingSeconds: null
+        remainingSeconds: null,
+        type: null
     },
 
     initialize: function() {
         this.listenTo(this, 'finished', this.stop);
     },
 
-    start: function(duration){
-        if (duration) {
-            this.set('duration', duration);
+    start: function(options){
+        if (options.duration) {
+            this.set('duration', options.duration);
         }
+        this.set('type', options.type);
 
         this.set('isStarted', true);
         this.set('remainingSeconds', this.get('duration'));
