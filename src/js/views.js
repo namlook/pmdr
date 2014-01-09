@@ -8,6 +8,7 @@ var CountdownView = Backbone.View.extend({
     render: function() {
         var value = this._prettifySeconds(this.model.get('remainingSeconds'));
         this.$el.html(value);
+        return this;
     },
 
     _prettifySeconds: function(seconds) {
@@ -25,17 +26,17 @@ var StartButtonView = Backbone.View.extend({
         'click': 'startTimer'
     },
     startTimer: function() {
-        this.model.start(3);
+        this.model.start();
     }
 });
 
 var timer = new Timer();
 var countdownView = new CountdownView({
     model: timer
-})
+});
 var startButtonView = new StartButtonView({
     model: timer
-})
+});
 
 timer.onFinish(function(){
     alert('done');
