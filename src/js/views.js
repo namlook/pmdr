@@ -105,21 +105,21 @@ Pmdr.Views.CtrlView = Backbone.View.extend({
         this.pomodoroButton = new Pmdr.Views.StartButtonView({
             'model': this.model,
             'title': 'start',
-            'duration': 2,//5 * 60,
+            'duration': 25 * 60,
             'type': 'pomodoro',
         });
 
         this.shortBreakButton = new Pmdr.Views.StartButtonView({
             'model': this.model,
             'title': 'break',
-            'duration': 2,//5 * 60,
+            'duration': 5 * 60,
             'type': 'short-break',
         });
 
         this.longBreakButton = new Pmdr.Views.StartButtonView({
             'model': this.model,
             'title': 'long break',
-            'duration': 2,//15 * 60,
+            'duration': 15 * 60,
             'type': 'long-break',
         });
 

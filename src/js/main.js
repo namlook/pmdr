@@ -2,12 +2,27 @@ var Pmdr = Pmdr || {};
 
 
 Pmdr.App = (function(Models, Views, utils) {
+    var createTimer = function() {
+        var timer = new Models.Timer();
+
+        var timerId = localStorage.getItem('timer');
+        if (timerId) {
+            timer.fetch(timerId);
+        }
+
+        return timer;
+    }
+
     var run = function() {
         var pomodoros = new Models.Pomodoros();
         var pomodorosView = new Views.PomodorosView({collection: pomodoros});
         pomodoros.fetch();
 
-        var timer = new Models.Timer();
+        var timer = createTimer();
+        console.log(timer.get('startedAt'));
+        console.log(timer.id);
+        console.log(timer.get('duration'));
+
         var countdownView = new Views.CountdownView({
             model: timer
         });
